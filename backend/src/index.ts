@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import express, { type Application, type Request, type Response } from "express";
-import taskRoutes from "./routes/task.routes";
+import connectDB from "./config/database.js";
+import taskRoutes from "./routes/task.routes.js";
 import {
   corsMiddleware,
   requestLogger,
@@ -9,10 +10,13 @@ import {
   validateRequest,
   rateLimiter,
   healthCheck,
-} from "./middlewares/middlewares";
+} from "./middlewares/middlewares.js";
 
 // Load environment variables
 dotenv.config();
+
+// Connect to MongoDB
+connectDB();
 
 const app: Application = express();
 const PORT = process.env.PORT || 5000;
